@@ -1,3 +1,4 @@
+#import libraries
 from flask import Flask, render_template, request, redirect, url_for, session
 from models.db_model import dbVote
 
