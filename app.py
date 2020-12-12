@@ -1,13 +1,57 @@
 #import libraries
-from flask import Flask, render_template, request, redirect, url_for, session
-
+from flask import Flask, flash, render_template, request, \
+	redirect, url_for, session, json
+from models.db_model import dbVote
 
 vote = Flask(__name__)
 vote.secret_key = 'hRQB96dANtz27yDJ6r8kdF'
 
-@vote.route('/')
+
+@vote.route('/', methods=['GET', 'POST'])
 def index():
-	return render_template('index.html')
+	img = './static/img/main.jpeg'
+	if request.method == 'POST':
+		token = request.form['token']
+		db = dbVote()
+		authd = db.tokenAuth(token)
+
+		if len(authd) > 0:
+			if token == authd[0] and authd[1]==0:
+				session['token'] = authd[0]
+				return redirect(url_for("votes"))
+			if authd[1] != 0:
+				# make a popup that token is expired
+				print('expired')
+				flash("Your Token is already expired")
+				return redirect(url_for('index'))
+		else:
+			# make a popup token is unexisted
+			print('unexisted')
+			flash("Your Token doesn't exist")
+			return redirect(url_for('index'))
+
+	return render_template('index.html', img=img)
+
+@vote.route('/votes') #methods=['GET', 'POST']
+def votes():
+	paslon1 = './static/img/paslon1.jpg'
+	paslon2 = './static/img/paslon2.png'
+
+	if request.method=='POST':
+		print('sek')
+		db=dbVote()
+		if request.form['paslon1']=="1":
+			print('insert 1 sek')
+			db.insertVote1(session['token'])
+			print('iso e 1')
+			return redirect(url_for('index'))
+		if request.form['paslon2']=="2":
+			print('sek 2 saiki')
+			db.insertVote2(session['token'])
+			print('wah yo iso e')
+			return redirect(url_for('index'))
+
+	return render_template('votes.html', paslon1=paslon1, paslon2=paslon2)
 
 
 @vote.route('/about-us')
@@ -15,9 +59,9 @@ def about():
 	return render_template('about.html')
 
 
-@vote.route('/votes-on-going')
+@vote.route('/vote-on-going')
 def votes_on_going():
-	return render_template('votes-on-going.html')
+	return render_template('vote-on-going.html')
 
 
 if __name__=='__main__':

@@ -17,28 +17,24 @@ class dbVote():
     
     def closeDB(self):
         self.db.close()
-
-    # def registerUser(self, data):
-    #     self.openDB()
-    #     self.cursor.execute("INSERT INTO accounts (name, username, password, email) VALUES ('%s', '%s', '%s', '%s')"%(data))
-    #     self.db.commit()
-    #     self.closeDB()
     
-    def loginAuth(self, email):
+    def tokenAuth(self, token):
         self.openDB()
-        self.cursor.execute("SELECT * from accounts WHERE email='%s'"%(email))
-        account = self.cursor.fetchone()
+        self.cursor.execute("SELECT * from votes WHERE token='%s'"%(token))
+        vote = self.cursor.fetchone()
         self.closeDB()
-        return account
+        return vote
 
-    def registerVoter(self, data):
+    def insertVote1(self, token):
         self.openDB()
-        # nim check
-        validate_nim = self.cursor.execute("SELECT nim from voters where nim='%s'"%(data[0]))
-        if validate_nim == False:
-            self.cursor.execute("INSERT INTO voters (nim, name, major_id, email, whatsapp) VALUES ('%s','%s','%s','%s','%s')"%(data))
-            self.db.commit()
-            self.closeDB()
-        else:
-            msg = 'NIM already registered'
-            return msg
+        self.cursor.execute("UPDATE votes SET choice=1 WHERE token='%s'"%(token))
+        self.db.commit()
+        self.closeDB()
+    
+    def insertVote2(self, token):
+        self.openDB()
+        self.cursor.execute("UPDATE votes SET choice=2 WHERE token='%s'"%(token))
+        self.db.commit()
+        self.closeDB()
+
+    #count vote

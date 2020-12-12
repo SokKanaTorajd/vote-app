@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+{% block title %} Voting BEM FTTI 2020/2021 {% endblock %}
+{% block content %}
+<div class="text-center">
+    <div class="container-fluid">
+        <div class="row">
+            <form action="{{ url_for('votes') }}" method="POST">
+                <div class="col-md-4 col-sm-2">
+                    <div class="thumbnail">
+                        <div class="img-wrapper">
+                            <img src="{{ paslon1}}" class="img-responsive" name="paslon1">
+                        </div>
+                        <div class="form-group"></div>
+                            <input type="submit" value="1">Reyhan & Dewi</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-2">
+                    <div class="thumbnail">
+                        <div class="img-wrapper">
+                            <img src="{{ paslon2}}" class="img-responsive" name="paslon2">
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-primary" type="submit" value="2">Yoshi & Eva</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
