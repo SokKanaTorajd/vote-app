@@ -1,6 +1,12 @@
 {% extends 'layout.html' %}
 {% block title %} Aplikasi Voting FTTI {% endblock %}
 {% block content %}
+    {% if error %}
+        <p class=error><strong>Error:</strong> {{ error }}
+    {% endif %}
+    {% if msg %}
+        <p class=error><strong>Message:</strong> {{ msg }}
+    {% endif %}
     <div class="container-fluid">
             <div class="row">
                 <div class="col-md-7 col-sm-3">

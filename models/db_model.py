@@ -20,21 +20,33 @@ class dbVote():
     
     def tokenAuth(self, token):
         self.openDB()
-        self.cursor.execute("SELECT * from votes WHERE token='%s'"%(token))
+        q = "SELECT * from votes WHERE token='%s'"%(token)
+        self.cursor.execute(q)
         vote = self.cursor.fetchone()
         self.closeDB()
         return vote
 
     def insertVote1(self, token):
         self.openDB()
-        self.cursor.execute("UPDATE votes SET choice=1 WHERE token='%s'"%(token))
+        q = "UPDATE votes SET choice=1 WHERE token='%s'"%(token)
+        self.cursor.execute(q)
         self.db.commit()
         self.closeDB()
     
     def insertVote2(self, token):
         self.openDB()
-        self.cursor.execute("UPDATE votes SET choice=2 WHERE token='%s'"%(token))
+        q = "UPDATE votes SET choice=2 WHERE token='%s'"%(token)
+        self.cursor.execute(q)
         self.db.commit()
         self.closeDB()
 
-    #count vote
+    def countVote(self):
+        self.openDB()
+        q1 = "SELECT COUNT(*) as paslon1 from votes where choice=1"
+        q2 = "SELECT COUNT(*) as paslon2 from votes where choice=2"
+        self.cursor.execute(q1)
+        count_choice1 = self.cursor.fetchone()
+        self.cursor.execute(q2)
+        count_choice2 = self.cursor.fetchone()
+        self.closeDB()
+        return (count_choice1, count_choice2)

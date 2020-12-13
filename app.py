@@ -10,62 +10,78 @@ vote.secret_key = 'hRQB96dANtz27yDJ6r8kdF'
 @vote.route('/', methods=['GET', 'POST'])
 def index():
 	img = './static/img/main.jpeg'
+	error = None
 	if request.method == 'POST':
 		token = request.form['token']
 		db = dbVote()
-		authd = db.tokenAuth(token)
+		
+		try:
+			authd = db.tokenAuth(token)
 
-		if len(authd) > 0:
 			if token == authd[0] and authd[1]==0:
 				session['token'] = authd[0]
 				return redirect(url_for("votes"))
 			if authd[1] != 0:
-				# make a popup that token is expired
-				print('expired')
-				flash("Your Token is already expired")
+				error = 'Expired Token'
+				flash("Your Token is already used!")
 				return redirect(url_for('index'))
-		else:
-			# make a popup token is unexisted
-			print('unexisted')
-			flash("Your Token doesn't exist")
+
+		except TypeError:
+			error = 'Unknown Token'
+			flash("Invalid Token!")
 			return redirect(url_for('index'))
 
-	return render_template('index.html', img=img)
+	return render_template('index.html', img=img, error=error)
 
-@vote.route('/votes') #methods=['GET', 'POST']
+@vote.route('/votes',  methods=['GET', 'POST'])
 def votes():
 	paslon1 = './static/img/paslon1.jpg'
 	paslon2 = './static/img/paslon2.png'
+	msg = None
 
 	if request.method=='POST':
-		print('sek')
 		db=dbVote()
-		if request.form['paslon1']=="1":
-			print('insert 1 sek')
+		if request.form['paslon']=="Reyhan & Dewi":
 			db.insertVote1(session['token'])
-			print('iso e 1')
+			session.clear()
+			msg='Voted!'
+			flash('Thank you for using your voting rights!')
 			return redirect(url_for('index'))
-		if request.form['paslon2']=="2":
-			print('sek 2 saiki')
+
+		elif request.form['paslon']=="Yoshi & Eva":
 			db.insertVote2(session['token'])
-			print('wah yo iso e')
+			session.clear()
+			msg='Voted!'
+			flash('Thank you for using your voting rights!')
 			return redirect(url_for('index'))
 
-	return render_template('votes.html', paslon1=paslon1, paslon2=paslon2)
-
-
-@vote.route('/about-us')
-def about():
-	return render_template('about.html')
+	return render_template('votes.html', paslon1=paslon1, paslon2=paslon2, msg=msg)
 
 
 @vote.route('/vote-on-going')
-def votes_on_going():
-	return render_template('vote-on-going.html')
+def chart():
+	db = dbVote()
+	msg = ''
+	try:
+		data = db.countVote()
+		labels = ['Reyhan & Dewi', 'Yoshi & Eva']
+		values = [data[0][0], data[1][0]]
+
+	except TypeError:
+		msg = 'Unavailable Data'
+		flash('Unavailable Data')
+		return redirect(url_for('vote-on-going'))
+
+	return render_template('vote-on-going.html', labels=labels, values=values, msg=msg)
 
 
 if __name__=='__main__':
 	vote.run(debug=True)
+
+
+# @vote.route('/about-us')
+# def about():
+# 	return render_template('about.html')
 
 
 # @vote.route('/register', methods=['GET', 'POST'])
