@@ -76,7 +76,7 @@ def chart():
 
 
 if __name__=='__main__':
-	vote.run(debug=True)
+	vote.run(debug=True, port=33507)
 
 
 # @vote.route('/about-us')
