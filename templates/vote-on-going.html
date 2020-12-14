@@ -6,28 +6,28 @@
     {% endif %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-7 col-sm-3">
-                <div class="wrapper">
-                        <h1>Quick Count Voting BEM FTTI Universitas Jenderal Achmad Yani Yogyakarta</h1>
-                        <div class="chart-container" margin="auto" style="position: relative">
-                            <canvas id="vote-chart" width="300" height="300"></canvas>
-                        </div>
-                </div>
-                <script>
-                    new Chart(document.getElementById("vote-chart"), {
-                        type: 'pie',
-                        data: {
-                            labels: {{labels|tojson}},
-                            datasets: [
-                                {
-                                    label: "Quick Count",
-                                    backgroundColor: ["#0000FE", "#000B5D"],
-                                    data: {{values|tojson}}
-                                }
-                            ]
-                        }
-                    });
-                </script>
+            <div class="text-center">
+                    <div class="wrapper">
+                            <h2>Quick Count Voting BEM FTTI Universitas Jenderal Achmad Yani Yogyakarta</h2>
+                            <div class="chart-container" margin="auto" style="position: relative">
+                                <canvas id="vote-chart"></canvas>
+                            </div>
+                    </div>
+                    <script>
+                        new Chart(document.getElementById("vote-chart"), {
+                            type: 'pie',
+                            data: {
+                                labels: {{labels|tojson}},
+                                datasets: [
+                                    {
+                                        label: "Quick Count",
+                                        backgroundColor: ["#0000FE", "#000B5D"],
+                                        data: {{values|tojson}}
+                                    }
+                                ]
+                            }
+                        });
+                    </script>
             </div>        
         </div>
     </div>
