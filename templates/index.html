@@ -2,45 +2,29 @@
 {% block title %} Aplikasi Voting FTTI {% endblock %}
 {% block content %}
     {% if error %}
-        <p class=error><strong>Error:</strong> {{ error }}
+        <p class=error><strong>Error:</strong> {{ error }} </p>
     {% endif %}
     {% if msg %}
-        <p class=error><strong>Message:</strong> {{ msg }}
+        <p class=error><strong>Message:</strong> {{ msg }} </p>
     {% endif %}
     <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-7 col-sm-3">
-                        <div class="thumbnail">
-                            <div class="img-wrapper">
-                                <img src="{{ img }}" class="img-responsive" alt="Paslon Ketua dan Wakil Ketua BEM FTTI 2020/2021">
-                            </div>
-                        </div>
+        <div class="row" style="padding: 20px;">
+            <div class="img-wrapper">
+                <img src="{{ img }}" class="center-block img-responsive img-rounded" alt="Paslon Ketua dan Wakil Ketua BEM FTTI 2020/2021">
+            </div>
+        </div>
+        <div class="col-md-6 col-md-offset-3">
+            <form action="/" method="POST">
+                <div class="text-center">
+                    <div class="form-group w-75">
+                        <label class="text-center">Insert your Token here</label>
+                        <input type="text" class="form-control" placeholder="Paste your Token here" name="token" require>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary">Submit</button>
                     </div>
                 </div>
-            </div>
-    </div>
-    
-    <div class="row">
-        <br>
-    </div>
-    <div class="col-md-6 col-md-offset-3">
-        <form action="/" method="POST">
-            <div class="text-center">
-                <div class="form-group w-75">
-                    <label class="text-center">Insert your Token here</label>
-                    <input type="text" class="form-control" placeholder="Paste your Token here" name="token" require>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary">Submit</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 {% endblock %}
-
-
-
-
-
-
-

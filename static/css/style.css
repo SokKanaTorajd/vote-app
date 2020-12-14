@@ -1,6 +1,13 @@
 .img-responsive {
-  width: 90%;
+  width: auto;
   height: auto;
+  /* margin-left: auto;
+  margin-right: auto; */
+}
+
+.img-wrapper {
+  width: fit-content;
+  height: fit-content;
 }
 
 * {
@@ -151,6 +158,9 @@ body.loggedin {
   margin: 0 0 10px 0;
 }
 
+.candidates {
+  column-gap: 20px;
+}
 
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500');
 
@@ -178,7 +188,7 @@ body {
 
 /* Sidebar Styles */
 
-#sidebar {
+/* #sidebar {
   z-index: 1000;
   position: fixed;
   left: 250px;
@@ -214,7 +224,7 @@ body {
   
 } */
 
-#sidebar .nav a{
+/* #sidebar .nav a{
   background: none;
   border-bottom: 1px solid #455A64;
   color: #CFD8DC;
@@ -229,4 +239,4 @@ body {
 
 #sidebar .nav a i{
   margin-right: 16px;
-}
+} */

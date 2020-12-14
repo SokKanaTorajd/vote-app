@@ -28,7 +28,7 @@ def index():
 
 		except TypeError:
 			error = 'Unknown Token'
-			flash("Invalid Token!")
+			flash("Invalid Token or your Token has been used!")
 			return redirect(url_for('index'))
 
 	return render_template('index.html', img=img, error=error)
