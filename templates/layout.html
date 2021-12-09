@@ -26,15 +26,15 @@
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                             <li><a href="/">Home</a></li>
-                            <li><a href="/vote-on-going">Vote on-Going</a></li>
-                        <!-- {% if session['name'] %}
-                            <li><a href="/dashboard">Dashboard</a></li>
+                            <li><a href="/#">Vote on-Going</a></li>
+                        {% if session['name'] %}
+                            <li><a href="/dashboard">Home</a></li>
                             <li><a href="/logout">Logout</a></li>
-                        {% else %}
-                            <li><a href="/register">Register an Account</a>a</li>
-                            <li><a href="/login">Login</a></li>
-                            <li><a href="/voter-form">Register as voter</a></li>
-                        {% endif %} -->
+                        <!-- it's supposed to be else arg -->
+                            <!-- <li><a href="/login">Login</a></li> -->
+                            <!-- <li><a href="/register">Register an Account</a>a</li> -->
+                            <!-- <li><a href="/voter-form">Register as voter</a></li> -->
+                        {% endif %}
                             <!-- <li><a href="/about-us">About Us</a></li> -->
                     </ul>
                 </div>
@@ -58,8 +58,8 @@
             <div class="container">
                 <div class="center-block">
                     {% block footer %}
-                    &copy; Copyright 2020 by 
-                        <a href="https://dsc.community.dev/universitas-jenderal-achmad-yani-yogyakarta">
+                    &copy; Copyright 2021 by 
+                        <a href="#">
                             <img src="./static/img/dsc-unjani.png" height="40px"/>
                         </a>
                     {% endblock %}
