@@ -5,6 +5,11 @@
   margin-right: auto; */
 }
 
+div{
+  display:flex;
+  justify-content: center;
+  }
+
 .img-wrapper {
   width: fit-content;
   height: fit-content;
