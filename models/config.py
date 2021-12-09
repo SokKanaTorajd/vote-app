@@ -1,4 +1,6 @@
-DB_HOST = 'us-cdbr-east-02.cleardb.com'
-DB_USER = 'be8879fa8c7e16'
-DB_PASSWORD = '707a5465'
-DB_NAME = 'heroku_7926aa433849be4'
+import os
+
+DB_HOST = os.environ.get('DB_HOST')
+DB_USER = os.environ.get('DB_USER')
+DB_PASSWORD = os.environ.get('DB_PASSWORD')
+DB_NAME = os.environ.get('DB_NAME')
