@@ -9,7 +9,7 @@ vote.secret_key = 'hRQB96dANtz27yDJ6r8kdF'
 
 @vote.route('/', methods=['GET', 'POST'])
 def index():
-	img = './static/img/main.jpeg'
+	img = './static/img/main-21.jpeg'
 	error = None
 	if request.method == 'POST':
 		token = request.form['token']
@@ -35,20 +35,20 @@ def index():
 
 @vote.route('/votes',  methods=['GET', 'POST'])
 def votes():
-	paslon1 = './static/img/paslon1.jpg'
-	paslon2 = './static/img/paslon2.png'
+	paslon1 = './static/img/paslon1.jpeg'
+	paslon2 = './static/img/paslon2.jpeg'
 	msg = None
 
 	if request.method=='POST':
 		db=dbVote()
-		if request.form['paslon']=="Reyhan & Dewi":
+		if request.form['paslon']=="Paslon 1":
 			db.insertVote1(session['token'])
 			session.clear()
 			msg='Voted!'
 			flash('Thank you for using your voting rights!')
 			return redirect(url_for('index'))
 
-		elif request.form['paslon']=="Yoshi & Eva":
+		elif request.form['paslon']=="Paslon 2":
 			db.insertVote2(session['token'])
 			session.clear()
 			msg='Voted!'
@@ -64,7 +64,7 @@ def chart():
 	msg = ''
 	try:
 		data = db.countVote()
-		labels = ['Reyhan & Dewi', 'Yoshi & Eva']
+		labels = ['Paslon 1', 'Paslon 2']
 		values = [data[0][0], data[1][0]]
 
 	except TypeError:
@@ -73,6 +73,36 @@ def chart():
 		return redirect(url_for('vote-on-going'))
 
 	return render_template('vote-on-going.html', labels=labels, values=values, msg=msg)
+
+@vote.route('/login', methods=['GET', 'POST'])
+def login():
+	if request.method == 'POST':
+		email = request.form['email']
+		password = request.form['password']
+		db = dbVote()
+		user_data = db.loginAuth(email)
+		
+		if len(user_data) > 0:
+			if password == user_data[3]:
+				session['name'] = user_data[1]
+				session['email'] = user_data[4]
+				return redirect(url_for('dashboard'))
+			else:
+				return 'Incorrect email or username'
+		else:
+			return 'User not registered'
+	else:
+		return render_template('login.html')
+
+
+@vote.route('/logout')
+def logout():
+	session.clear()
+	return redirect(url_for('index'))
+
+@vote.route('/admin')
+def admin():
+	return render_template('admin.html')
 
 
 if __name__=='__main__':
@@ -101,33 +131,6 @@ if __name__=='__main__':
 # 		session['name'] = request.form['name']
 # 		session['email'] = request.form['email']
 # 		return redirect(url_for('dashboard'))
-
-
-# @vote.route('/login', methods=['GET', 'POST'])
-# def login():
-# 	if request.method == 'POST':
-# 		email = request.form['email']
-# 		password = request.form['password']
-# 		db = dbVote()
-# 		user_data = db.loginAuth(email)
-		
-# 		if len(user_data) > 0:
-# 			if password == user_data[3]:
-# 				session['name'] = user_data[1]
-# 				session['email'] = user_data[4]
-# 				return redirect(url_for('dashboard'))
-# 			else:
-# 				return 'Incorrect email or username'
-# 		else:
-# 			return 'User not registered'
-# 	else:
-# 		return render_template('login.html')
-
-
-# @vote.route('/logout')
-# def logout():
-# 	session.clear()
-# 	return redirect(url_for('index'))
 
 
 # @vote.route('/dashboard')
